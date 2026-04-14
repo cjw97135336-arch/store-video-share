@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中医馆素材下载中心</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#4263EB',
+            secondary: '#E8EEFF',
+            xhs: '#FE2C55',      // 小红书红色
+            kuaishou: '#00C65E'  // 快手绿色
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .btn-hover {
+        transition: all 0.2s ease;
+      }
+      .btn-hover:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(66, 99, 235, 0.2);
+      }
+      .img-loading {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      .carousel-item {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .carousel-item.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .logo-loaded {
+        animation: logoFadeIn 0.5s ease;
+      }
+      @keyframes logoFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-md mx-auto p-6 py-12">
+    <!-- 品牌区 -->
+      <div class="text-center mb-8">
+        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-primary/20 overflow-hidden relative">
+            <!-- 第一层：PP.png Logo -->
+            <img 
+              src="pp.png" 
+              alt="中医馆LOGO" 
+              class="w-full h-full object-contain absolute inset-0" 
+              onload="this.classList.add('logo-loaded')" 
+              onerror="this.onerror=null; this.style.display='none'; this.parentElement.querySelector('.logo-svg').style.display='block'; this.parentElement.querySelector('.logo-fallback').style.display='none'">
+            
+            <!-- 第二层：内联SVG图标（备用） -->
+            <svg class="logo-svg w-full h-full absolute inset-0 hidden" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" onload="this.style.display='block'; this.parentElement.querySelector('.logo-fallback').style.display='none'" onerror="this.onerror=null; this.style.display='none'; this.parentElement.querySelector('.logo-fallback').style.display='flex'">
+              <rect x="10" y="10" width="80" height="80" rx="10" fill="#4263EB" opacity="0.2"/>
+              <text x="50" y="55" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#4263EB" text-anchor="middle">ZY</text>
+              <path d="M30,30 Q50,10 70,30 T30,70 T70,30" fill="none" stroke="#4263EB" stroke-width="2"/>
+            </svg>
+            
+            <!-- 第三层：纯文本备用 -->
+            <div class="logo-fallback text-primary font-bold text-2xl hidden items-center justify-center w-full h-full absolute inset-0">ZY</div>
+      </div>
+      <h1 class="text-2xl font-bold text-gray-800">中医馆新媒体运营中心</h1>
+      <p class="text-gray-500 mt-1">NFC碰一碰发视频</p>
+    </div>
+
+    <!-- 轮播图区域 -->
+    <div class="relative rounded-xl overflow-hidden mb-8 aspect-video bg-gray-100 shadow-md carousel-container">
+      <!-- 轮播图1（当前主图） -->
+      <div class="carousel-item active">
+        <img 
+            src="lb.png" 
+            alt="中医馆——碰一碰 养生保健服务" 
+            class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+          <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <i class="fa fa-play text-white text-xl"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 轮播指示器（可添加更多图片扩展轮播） -->
+      <div class="absolute bottom-3 right-3 flex gap-1">
+        <button class="w-2 h-2 rounded-full bg-white/60 carousel-indicator active" data-index="0"></button>
+      </div>
+    </div>
+
+    <!-- 素材下载容器 -->
+    <div class="bg-white rounded-xl p-5 shadow-sm mb-6">
+      <!-- 1. 文案模板分类 -->
+      <div class="mb-8">
+        <h3 class="text-xl font-medium text-primary mb-3 flex items-center">
+          <i class="fa fa-file-text mr-2"></i>文案模板
+        </h3>
+        
+        <!-- 文案区 -->
+        <div class="border border-gray-100 rounded-lg p-3 bg-gray-50 mb-4">
+          <p class="text-gray-800 text-sm mb-3" id="copy-text-1">
+            【养生推荐】这家中医馆的理疗服务太专业了！老中医把脉问诊，针灸推拿手法一流，身体疲劳一扫而空～ 打卡还有惊喜哦～ #中医馆 #养生保健 #中医理疗 #周末去哪儿
+          </p>
+          <div class="flex gap-2">
+            <button class="copy-btn btn-hover px-3 py-1.5 bg-primary/10 text-primary text-sm rounded flex items-center" data-target="1">
+              <i class="fa fa-copy mr-1"></i>复制文案
+            </button>
+            <button class="random-btn btn-hover px-3 py-1.5 bg-secondary text-primary text-sm rounded flex items-center" data-type="1">
+              <i class="fa fa-random mr-1"></i>随机文案
+            </button>
+          </div>
+        </div>
+        
+        <!-- 下载按钮组（已更新下载地址） -->
+        <div class="grid grid-cols-1 gap-3">
+          <a href="#" target="_blank" class="btn-hover flex items-center justify-between bg-secondary text-primary py-3 px-4 rounded-lg" data-file-key="video1">
+            <div class="flex items-center">
+              <i class="fa fa-video-camera mr-3 text-lg"></i>
+              <div>
+                <div class="font-medium">探店片</div>
+                <div class="text-xs text-gray-500">中医馆宣传.mp4（正在获取您的专属链接）</div>
+              </div>
+            </div>
+            <i class="fa fa-download"></i>
+          </a>
+          <a href="https://103.140.228.35:10241/down/e1VyNMPWuxDG.mp4" target="_blank" class="btn-hover flex items-center justify-between bg-secondary text-primary py-3 px-4 rounded-lg">
+            <div class="flex items-center">
+              <i class="fa fa-video-camera mr-3 text-lg"></i>
+              <div>
+                <div class="font-medium">种草样片</div>
+                <div class="text-xs text-gray-500">MP4 · 22MB</div>
+              </div>
+            </div>
+            <i class="fa fa-download"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. 门店素材分类（仅保留2项） -->
+      <div>
+        <h3 class="text-xl font-medium text-primary mb-3 flex items-center">
+          <i class="fa fa-shopping-bag mr-2"></i>门店素材
+        </h3>
+        
+        <!-- 文案区 -->
+        <div class="border border-gray-100 rounded-lg p-3 bg-gray-50 mb-4">
+          <p class="text-gray-800 text-sm mb-3" id="copy-text-2">
+            这家中医馆环境太雅致了！老中医坐诊把脉，还有艾灸、拔罐、推拿等理疗项目，店员还会讲解养生知识，逛累了还有免费养生茶水～ 周末不知道去哪就来这！#中医馆体验 #养生探店 #周末去哪儿
+          </p>
+          <div class="flex gap-2">
+            <button class="copy-btn btn-hover px-3 py-1.5 bg-primary/10 text-primary text-sm rounded flex items-center" data-target="2">
+              <i class="fa fa-copy mr-1"></i>复制文案
+            </button>
+            <button class="random-btn btn-hover px-3 py-1.5 bg-secondary text-primary text-sm rounded flex items-center" data-type="2">
+              <i class="fa fa-random mr-1"></i>随机文案
+            </button>
+          </div>
+        </div>
+        
+        <!-- 下载按钮组（已更新下载地址） -->
+        <div class="grid grid-cols-1 gap-3">
+          <a href="https://103.140.228.35:10241/down/e1VyNMPWuxDG.mp4" target="_blank" class="btn-hover flex items-center justify-between bg-secondary text-primary py-3 px-4 rounded-lg">
+            <div class="flex items-center">
+              <i class="fa fa-image mr-3 text-lg"></i>
+              <div>
+                <div class="font-medium">门店环境图集</div>
+                <div class="text-xs text-gray-500">中医馆环境 · ZIP · 45MB</div>
+              </div>
+            </div>
+            <i class="fa fa-download"></i>
+          </a>
+          <a href="https://103.140.228.35:10241/down/e1VyNMPWuxDG.mp4" target="_blank" class="btn-hover flex items-center justify-between bg-secondary text-primary py-3 px-4 rounded-lg">
+            <div class="flex items-center">
+              <i class="fa fa-cube mr-3 text-lg"></i>
+              <div>
+                <div class="font-medium">理疗项目图集</div>
+                <div class="text-xs text-gray-500">中医理疗项目 · ZIP · 38MB</div>
+              </div>
+            </div>
+            <i class="fa fa-download"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 社交媒体发布按钮组 -->
+    <div class="grid grid-cols-3 gap-3 mb-6">
+      <button id="douyin-btn" class="bg-primary text-white py-3 rounded-xl font-medium flex items-center justify-center shadow-md btn-hover">
+        <i class="fa fa-music mr-2"></i>抖音发布
+      </button>
+      <button id="xiaohongshu-btn" class="bg-xhs text-white py-3 rounded-xl font-medium flex items-center justify-center shadow-md btn-hover">
+        <i class="fa fa-book mr-2"></i>小红书发布
+      </button>
+      <button id="kuaishou-btn" class="bg-kuaishou text-white py-3 rounded-xl font-medium flex items-center justify-center shadow-md btn-hover">
+        <i class="fa fa-play-circle mr-2"></i>快手发布
+      </button>
+    </div>
+
+    <!-- 操作指引 -->
+    <div class="text-center text-gray-500 text-xs mt-6">
+      <p>若下载报错，可复制链接到手机浏览器打开</p>
+      <p class="mt-1">发布素材后向店员出示，可领取惊喜福利</p>
+    </div>
+  </div>
+
+  <!-- 提示弹窗 -->
+  <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg flex items-center z-50 hidden">
+    <i id="toast-icon" class="fa fa-check-circle mr-2 text-green-400"></i>
+    <span id="toast-text">操作成功</span>
+  </div>
+
+  <script>
+    // 差异化链接分配管理器 - 支持20个用户分别下载不同视频
+    const linkManager = {
+      // 存储各文件的备用链接列表
+      backupLinks: {
+        // 探店片备用链接列表（20个不同的链接）
+        'video1': [
+          'https://wormhole.app/MbLKW1#c9bWl8Y9ugaTvhwf57lEMw', // 用户1的链接
+          'https://wormhole.app/vbLDrm#7kqQVkdf690JLDMB_RPN3Q', // 用户2的链接
+          'https://wormhole.app/BEZojq#alYGGxKfF0whKH_CpguEVA', // 用户3的链接
+          'https://wormhole.app/z97p6X#KjTZy5VGIojohz3vBa-Uyg', // 用户4的链接
+          'https://wormhole.app/870AeP#9WJiGm-dGmkujY1f9lrO1w', // 用户5的链接
+          'https://wormhole.app/MbLKW1#c9bWl8Y9ugaTvhwf57lEMw', // 用户6的链接
+          'https://wormhole.app/vbLDrm#7kqQVkdf690JLDMB_RPN3Q', // 用户7的链接
+          'https://wormhole.app/BEZojq#alYGGxKfF0whKH_CpguEVA', // 用户8的链接
+          'https://wormhole.app/z97p6X#KjTZy5VGIojohz3vBa-Uyg', // 用户9的链接
+          'https://wormhole.app/870AeP#9WJiGm-dGmkujY1f9lrO1w', // 用户10的链接
+          'https://wormhole.app/MbLKW1#c9bWl8Y9ugaTvhwf57lEMw', // 用户11的链接
+          'https://wormhole.app/vbLDrm#7kqQVkdf690JLDMB_RPN3Q', // 用户12的链接
+          'https://wormhole.app/BEZojq#alYGGxKfF0whKH_CpguEVA', // 用户13的链接
+          'https://wormhole.app/z97p6X#KjTZy5VGIojohz3vBa-Uyg', // 用户14的链接
+          'https://wormhole.app/870AeP#9WJiGm-dGmkujY1f9lrO1w', // 用户15的链接
+          'https://wormhole.app/MbLKW1#c9bWl8Y9ugaTvhwf57lEMw', // 用户16的链接
+          'https://wormhole.app/vbLDrm#7kqQVkdf690JLDMB_RPN3Q', // 用户17的链接
+          'https://wormhole.app/BEZojq#alYGGxKfF0whKH_CpguEVA', // 用户18的链接
+          'https://wormhole.app/z97p6X#KjTZy5VGIojohz3vBa-Uyg', // 用户19的链接
+          'https://wormhole.app/870AeP#9WJiGm-dGmkujY1f9lrO1w'  // 用户20的链接
+        ]
+      },
+      
+      // 用户专属文案库 - 与链接一一对应
+      userTextLib: [
+        "【专属推荐1】这家中医馆的理疗服务太专业了！老中医把脉问诊，针灸推拿手法一流，身体疲劳一扫而空～ #中医馆 #养生保健 #中医理疗",
+        "【专属推荐2】超爱这家中医馆的艾灸服务！传统艾灸配合现代理疗，调理身体效果显著，坚持几次后精神状态好多了 #中医养生 #艾灸 #健康生活",
+        "【专属推荐3】这家中医馆的推拿按摩给我的惊喜太大了！老师傅手法专业，颈椎腰椎问题明显改善，失眠的我终于能睡整觉了 #中医推拿 #深度睡眠 #养生",
+        "【专属推荐4】第四次来这家中医馆理疗体验感满分！拔罐刮痧都很专业，身体湿气排出后整个人轻松了，早上起来神清气爽 #拔罐 #中医馆 #养生保健",
+        "【专属推荐5】这家中医馆的中药调理真的改变了我的体质！老中医开方精准，喝了一个疗程后身体明显好转 #中医调理 #健康养生 #好医馆分享",
+        "【专属推荐6】这家中医馆的针灸太适合我了！针对我的肩颈问题定制方案，几次治疗后疼痛明显缓解 #针灸 #中医理疗 #健康改善",
+        "【专属推荐7】这家中医馆的艾灸太棒了！传统悬灸温通经络，寒湿体质得到改善，手脚冰凉的问题好多了 #艾灸养生 #中医馆 #健康调理",
+        "【专属推荐8】这家中医馆是我的养生救星！药浴泡脚配合推拿，疲劳一扫而空，睡眠质量大大提升 #中医馆 #药浴 #养生好去处",
+        "【专属推荐9】这家中医馆的理疗真的值得一试！专业中医团队，针对个人体质定制调理方案，缓解一天的疲劳 #中医理疗 #养生馆 #健康",
+        "【专属推荐10】这家中医馆太神奇了！把脉问诊精准，中药调理效果明显，身体亚健康状态得到改善 #中医调理 #养生保健 #好医生推荐",
+        "【专属推荐11】这家中医馆带来惊喜体验！小儿推拿手法轻柔，孩子感冒咳嗽好得快，宝妈放心推荐 #小儿推拿 #中医馆 #儿童健康",
+        "【专属推荐12】这家中医馆的中药贴敷太舒服了！针对关节疼痛，贴敷后温热舒适，缓解效果明显 #中医贴敷 #养生 #好医馆分享",
+        "【专属推荐13】这家中医馆真的改变了我的健康！把脉问诊后开方调理，月经不调的问题得到改善 #中医妇科 #调理身体 #女性健康",
+        "【专属推荐14】这家中医馆太赞了！药膳调理配合针灸，针对减肥塑形，一个月瘦了十斤 #中医减肥 #养生馆 #健康瘦身",
+        "【专属推荐15】这家中医馆给我的养生带来惊喜！艾灸温补阳气，体质虚寒的问题明显改善 #艾灸 #中医调理 #养生改善",
+        "【专属推荐16】这家中医馆真的值得推荐！专业中医团队，望闻问切细致入微，调理方案科学有效 #好医馆分享 #中医馆 #健康养生",
+        "【专属推荐17】这家中医馆是我的健康守护神！定期针灸调理，颈椎病不再复发，工作效率大大提高 #针灸 #中医理疗 #改善健康",
+        "【专属推荐18】这家中医馆体验感太棒了！环境雅致，老中医专业，推拿按摩后全身舒畅 #中医馆 #养生保健 #好馆推荐",
+        "【专属推荐19】这家中医馆太适合我了！独特的火罐疗法，祛湿排毒效果显著，身体轻盈多了 #拔罐 #中医馆 #养生质量",
+        "【专属推荐20】这家中医馆真的改变了我！综合调理方案，针对我的体质问题，健康状态明显提升 #中医馆 #健康养生 #舒适生活"
+      ],
+      
+      // 用户唯一标识符
+      userId: null,
+      
+      // 为用户生成或获取唯一ID
+      getUserId() {
+        // 检查是否已有存储的用户ID
+        if (this.userId === null) {
+          // 尝试从localStorage获取
+          this.userId = localStorage.getItem('videoDownloadUserId');
+          
+          // 如果没有存储的ID，则创建新ID
+          if (!this.userId) {
+            // 生成一个基于当前时间戳和随机数的ID
+            this.userId = Math.floor(Math.random() * 20); // 0-19范围内的随机数，对应20个用户
+            // 存储用户ID，确保同一用户下次访问使用相同链接
+            localStorage.setItem('videoDownloadUserId', this.userId);
+          } else {
+            // 将字符串转为数字
+            this.userId = parseInt(this.userId, 10);
+          }
+        }
+        return this.userId;
+      },
+      
+      // 获取分配给当前用户的链接索引
+      getUserLinkIndex(fileKey) {
+        const userId = this.getUserId();
+        const links = this.backupLinks[fileKey] || [];
+        // 根据用户ID计算对应的链接索引
+        // 如果链接数量少于20，则循环使用
+        return userId % links.length;
+      },
+      
+      // 获取分配给当前用户的链接
+      getUserLink(fileKey) {
+        const links = this.backupLinks[fileKey] || [];
+        const index = this.getUserLinkIndex(fileKey);
+        return links[index] || null;
+      },
+      
+      // 获取用户专属文案
+      getUserText() {
+        const userId = this.getUserId();
+        return this.userTextLib[userId] || this.userTextLib[0];
+      },
+      
+      // 设置用户专属文案到界面上
+      setUserText() {
+        const userText = this.getUserText();
+        const textElement = document.getElementById('copy-text-1');
+        if (textElement) {
+          textElement.textContent = userText;
+        }
+      },
+      
+      // 记录每个文件已尝试过的链接索引
+      triedIndexes: {},
+      
+      // 重置尝试记录
+      resetTriedLinks(fileKey) {
+        this.triedIndexes[fileKey] = new Set();
+      },
+      
+      // 尝试下一个备用链接（当用户链接不可用时）
+      tryNextLink(fileKey) {
+        const links = this.backupLinks[fileKey] || [];
+        if (links.length === 0) return null;
+        
+        // 确保尝试记录已初始化
+        if (!this.triedIndexes[fileKey]) {
+          this.resetTriedLinks(fileKey);
+        }
+        
+        // 从当前索引开始查找下一个未尝试过的链接
+        const startIndex = this.getUserLinkIndex(fileKey);
+        let currentIndex = startIndex;
+        
+        // 尝试查找一个未尝试过的链接
+        do {
+          currentIndex = (currentIndex + 1) % links.length;
+          // 如果找到未尝试过的链接
+          if (!this.triedIndexes[fileKey].has(currentIndex)) {
+            this.triedIndexes[fileKey].add(currentIndex);
+            return links[currentIndex];
+          }
+        } while (currentIndex !== startIndex); // 如果回到起点，说明所有链接都尝试过了
+        
+        // 重置尝试记录，重新开始
+        this.resetTriedLinks(fileKey);
+        // 避开用户原始链接
+        currentIndex = (startIndex + 1) % links.length;
+        this.triedIndexes[fileKey].add(currentIndex);
+        return links[currentIndex];
+      },
+      
+      // 初始化下载按钮
+      initDownloadButtons() {
+        // 为所有带有data-file-key属性的下载按钮添加处理
+        document.querySelectorAll('a[data-file-key]').forEach(button => {
+          const fileKey = button.dataset.fileKey;
+          const userLink = this.getUserLink(fileKey);
+          const userId = this.getUserId() + 1; // 转为1-20的用户编号
+          
+          // 更新按钮显示的用户信息
+          const infoElement = button.querySelector('.text-xs');
+          if (infoElement) {
+            infoElement.textContent = `中医馆宣传.mp4 (用户专属链接 ${userId}/20)`;
+          }
+          
+          // 重置尝试记录
+          this.resetTriedLinks(fileKey);
+          
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            let currentAttempt = 0;
+            const maxAttempts = 5; // 最大尝试次数
+            
+            // 递归尝试链接的函数
+            const tryNextAvailableLink = () => {
+              if (currentAttempt >= maxAttempts) {
+                // 达到最大尝试次数
+                showToast('已尝试所有备用链接，请稍后再试', false);
+                return;
+              }
+              
+              currentAttempt++;
+              let testUrl;
+              
+              // 第一次尝试使用用户专属链接
+              if (currentAttempt === 1) {
+                testUrl = linkManager.getUserLink(fileKey);
+                showToast(`正在打开您的专属链接 (${userId}/20)...`);
+              } else {
+                // 后续尝试使用其他备用链接
+                testUrl = linkManager.tryNextLink(fileKey);
+                showToast(`正在尝试备用链接 ${currentAttempt-1}...`, false);
+              }
+              
+              // 尝试在新窗口打开链接
+              const newWindow = window.open(testUrl, '_blank');
+              
+              // 设置一个延迟检查窗口状态
+              setTimeout(() => {
+                // 如果用户关闭了窗口或窗口打开失败，立即尝试下一个链接
+                if (!newWindow || newWindow.closed) {
+                  showToast('链接打开失败，正在尝试其他链接...', false);
+                  tryNextAvailableLink();
+                }
+              }, 2000); // 2秒后检查
+            };
+            
+            // 开始尝试链接
+            tryNextAvailableLink();
+          });
+        });
+      }
+    };
+    
+    // 轮播图功能
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    const items = document.querySelectorAll('.carousel-item');
+    
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        // 移除所有active类
+        items.forEach(item => item.classList.remove('active'));
+        indicators.forEach(ind => ind.classList.remove('active', 'bg-white'));
+        indicators.forEach(ind => ind.classList.add('bg-white/60'));
+        
+        // 添加当前active类
+        items[index].classList.add('active');
+        indicator.classList.add('active', 'bg-white');
+        indicator.classList.remove('bg-white/60');
+      });
+    });
+
+    // 3. 文案库（更新为记忆枕相关）
+    const randomTextLib = {
+      1: [
+        "【养生推荐】这家中医馆的理疗服务太专业了！老中医把脉问诊，针灸推拿手法一流，身体疲劳一扫而空～ 打卡还有惊喜哦～ #中医馆 #养生保健 #中医理疗 #周末去哪儿",
+        "终于找到靠谱的中医馆了！老中医把脉精准，针灸推拿手法专业，身体不适明显改善～ 推荐给需要调理的朋友 #中医推荐 #养生馆 #健康调理",
+        "这家中医馆的理疗太舒服了！环境雅致，医生专业，艾灸推拿后全身舒畅，做完立马精神焕发～ #中医理疗 #养生保健 #健康生活"
+      ],
+      2: [
+        "这家中医馆环境太雅致了！老中医坐诊把脉，还有艾灸、拔罐、推拿等理疗项目，店员还会讲解养生知识，逛累了还有免费养生茶水～ 周末不知道去哪就来这！#中医馆体验 #养生探店 #周末去哪儿",
+        "强烈推荐这家中医馆！可以亲身咨询老中医，还有各种理疗项目体验，医生超专业，还学到了不少养生小知识 #养生好去处 #中医馆 #健康指南",
+        "周末打卡这家中医馆，环境舒适，理疗项目超多，还能免费体验中医问诊，适合带家人一起来 #中医养生 #周末探店 #健康生活"
+      ]
+    };
+
+    // 4. 显示提示弹窗
+    function showToast(text, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+      
+      toastText.textContent = text;
+      toastIcon.className = isSuccess ? "fa fa-check-circle mr-2 text-green-400" : "fa fa-exclamation-circle mr-2 text-yellow-400";
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2000);
+    }
+
+    // 5. 复制文案功能
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = `copy-text-${btn.dataset.target}`;
+        const text = document.getElementById(targetId).textContent;
+        
+        navigator.clipboard.writeText(text)
+          .then(() => showToast('文案已复制'))
+          .catch(() => showToast('复制失败，请手动复制', false));
+      });
+    });
+
+    // 6. 随机文案功能
+    document.querySelectorAll('.random-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        const textList = randomTextLib[type];
+        const randomIndex = Math.floor(Math.random() * textList.length);
+        const targetId = `copy-text-${type}`;
+        
+        document.getElementById(targetId).textContent = textList[randomIndex];
+        showToast('文案已更新');
+      });
+    });
+
+    // 7. 社交媒体跳转功能
+    function openSocialApp(scheme, name) {
+      // 获取用户专属文案
+      const userText = linkManager.getUserText();
+      const encodedText = encodeURIComponent(userText);
+      let url;
+      
+      // 根据不同平台构建跳转链接
+      switch(scheme) {
+        case 'douyin':
+          url = `snssdk1128://create/video?title=${encodedText}`;
+          break;
+        case 'xiaohongshu':
+          url = `xiaohongshu://notes/edit?content=${encodedText}`;
+          break;
+        case 'kuaishou':
+          url = `kuaishou://edit?text=${encodedText}`;
+          break;
+      }
+      
+      try {
+        window.location.href = url;
+        setTimeout(() => showToast(`若未跳转，请手动打开${name}`, false), 1500);
+      } catch (err) {
+        showToast(`请手动打开${name}上传素材`, false);
+      }
+    }
+
+    // 绑定按钮事件
+    document.getElementById('douyin-btn').addEventListener('click', () => {
+      openSocialApp('douyin', '抖音');
+    });
+    
+    document.getElementById('xiaohongshu-btn').addEventListener('click', () => {
+      openSocialApp('xiaohongshu', '小红书');
+    });
+    
+    document.getElementById('kuaishou-btn').addEventListener('click', () => {
+      openSocialApp('kuaishou', '快手');
+    });
+    
+    // 初始化链接管理器
+    document.addEventListener('DOMContentLoaded', () => {
+      // 初始化链接管理器
+      const userId = linkManager.getUserId() + 1; // 1-20的用户编号
+      
+      // 显示用户专属文案到界面
+      linkManager.setUserText();
+      
+      // 显示用户信息提示
+      showToast(`欢迎用户${userId}/20，系统已为您分配专属视频和文案`);
+      
+      // 初始化下载按钮事件
+      linkManager.initDownloadButtons();
+    });
+  </script>
+</body>
+</html>

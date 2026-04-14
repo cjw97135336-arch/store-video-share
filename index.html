@@ -79,12 +79,10 @@
             <!-- 第二层：内联SVG图标（备用） -->
             <svg class="logo-svg w-full h-full absolute inset-0 hidden" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" onload="this.style.display='block'; this.parentElement.querySelector('.logo-fallback').style.display='none'" onerror="this.onerror=null; this.style.display='none'; this.parentElement.querySelector('.logo-fallback').style.display='flex'">
               <rect x="10" y="10" width="80" height="80" rx="10" fill="#4263EB" opacity="0.2"/>
-              <text x="50" y="55" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#4263EB" text-anchor="middle">ZY</text>
-              <path d="M30,30 Q50,10 70,30 T30,70 T70,30" fill="none" stroke="#4263EB" stroke-width="2"/>
             </svg>
             
             <!-- 第三层：纯文本备用 -->
-            <div class="logo-fallback text-primary font-bold text-2xl hidden items-center justify-center w-full h-full absolute inset-0">ZY</div>
+            <div class="logo-fallback text-primary font-bold text-2xl hidden items-center justify-center w-full h-full absolute inset-0"></div>
       </div>
       <h1 class="text-2xl font-bold text-gray-800">中医馆新媒体运营中心</h1>
       <p class="text-gray-500 mt-1">NFC碰一碰发视频</p>
@@ -98,11 +96,6 @@
             src="lb.png" 
             alt="中医馆——碰一碰 养生保健服务" 
             class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-          <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <i class="fa fa-play text-white text-xl"></i>
-          </div>
-        </div>
       </div>
       
       <!-- 轮播指示器（可添加更多图片扩展轮播） -->
